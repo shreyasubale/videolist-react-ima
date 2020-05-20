@@ -14,7 +14,7 @@ class App extends Component {
     super(props);
     this.state = {
       ui: {
-        header: 'List of most viewed YouTube videos',
+        header: 'My Video SPA',
         headerVideoList: 'Top 10s',
       },
       data: []
@@ -50,24 +50,34 @@ class App extends Component {
     // find out active video
     let data = this.state.data;
     let activeVideo = data.find(video => video.isActive);
+    console.log(activeVideo);
+    const opts = {
+        autoPlay: true,
+        controls: true,
+        muted: true,
+        sources: [{
+            src:(activeVideo && activeVideo.src) || "http://techslides.com/demos/sample-videos/small.mp4"
+        }]
+    };
     return (
-      <div className='app'>
-        <div className='app__video'>
-          <Header
-            title={this.state.ui.header}
-          />
-          <Video
-            video={activeVideo}
-          />
-        </div>
-        <div className='app__videoList'>
-          <VideoList
-            data={this.state.data}
-            title={this.state.ui.headerVideoList}
-            activeVideo={this.activeVideo}
-          />
+      <div className="container">
+        <div className='app row'>
+          <div className='app__video row'>
+              <div className='app__videoList col-md-6'>
+                  <Video {...opts}/>
+              </div>
+
+              <div className='app__videoList col-md-4'>
+                  <VideoList
+                      data={this.state.data}
+                      title={this.state.ui.headerVideoList}
+                      activeVideo={this.activeVideo}
+                  />
+              </div >
+          </div>
+
         </div >
-      </div >
+      </div>
     );
   }
 }
